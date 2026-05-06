@@ -1,4 +1,3 @@
-cat > docker-compose.yml << 'EOF'
 version: '3.8'
 
 networks:
@@ -51,4 +50,3 @@ services:
       - namenode
     networks:
       - bigdata-net
-EOF
