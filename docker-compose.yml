@@ -1,0 +1,54 @@
+cat > docker-compose.yml << 'EOF'
+version: '3.8'
+
+networks:
+  bigdata-net:
+    driver: bridge
+
+services:
+  namenode:
+    build: .
+    container_name: namenode
+    hostname: namenode
+    environment:
+      - NODE_TYPE=master
+    ports:
+      - "9870:9870"
+      - "8088:8088"
+      - "7077:7077"
+    networks:
+      - bigdata-net
+
+  datanode1:
+    build: .
+    container_name: datanode1
+    hostname: datanode1
+    environment:
+      - NODE_TYPE=worker
+    depends_on:
+      - namenode
+    networks:
+      - bigdata-net
+
+  datanode2:
+    build: .
+    container_name: datanode2
+    hostname: datanode2
+    environment:
+      - NODE_TYPE=worker
+    depends_on:
+      - namenode
+    networks:
+      - bigdata-net
+
+  datanode3:
+    build: .
+    container_name: datanode3
+    hostname: datanode3
+    environment:
+      - NODE_TYPE=worker
+    depends_on:
+      - namenode
+    networks:
+      - bigdata-net
+EOF
